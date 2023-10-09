@@ -103,11 +103,11 @@ void main()
     // float strength = random(gridUv);
 
     // Pattern 25
-    // vec2 gridUv = vec2(
-    //     floor(vUv.x * 10.0)/10.0, 
-    //     floor((vUv.y + vUv.x * 0.5) * 10.0)/10.0
-    // );
-    // float strength = random(gridUv);
+    vec2 gridUv = vec2(
+        floor(vUv.x * 10.0)/10.0, 
+        floor((vUv.y + vUv.x * 0.5) * 10.0)/10.0
+    );
+    float strength = random(gridUv);
 
     // Pattern 26
     // float strength = length(vUv);
@@ -144,21 +144,30 @@ void main()
     // float strength = lightX * lightY;
 
     // Pattern 32
-    vec2 rotatedUv = rotate(vUv, PI * 0.25, vec2(0.5));
-    vec2 lightUvX = vec2(
-        rotatedUv.x * 0.1 + 0.45,
-        rotatedUv.y * 0.5 + 0.25
-    );
-    float lightX = 0.015 / distance(lightUvX, vec2(0.5));
+    // vec2 rotatedUv = rotate(vUv, PI * 0.25, vec2(0.5));
+    // vec2 lightUvX = vec2(
+    //     rotatedUv.x * 0.1 + 0.45,
+    //     rotatedUv.y * 0.5 + 0.25
+    // );
+    // float lightX = 0.015 / distance(lightUvX, vec2(0.5));
 
-    vec2 lightUvY = vec2(
-        rotatedUv.y * 0.1 + 0.45,
-        rotatedUv.x * 0.5 + 0.25
-    );
-    float lightY = 0.015 / distance(lightUvY, vec2(0.5));
+    // vec2 lightUvY = vec2(
+    //     rotatedUv.y * 0.1 + 0.45,
+    //     rotatedUv.x * 0.5 + 0.25
+    // );
+    // float lightY = 0.015 / distance(lightUvY, vec2(0.5));
 
-    float strength = lightX * lightY;
+    // float strength = lightX * lightY;
+
+    // fix strenght (clamp)
+    strength = clamp(strength, 0.0, 1.0);
+
+    vec3 blackColor = vec3(0.0);
+    vec3 uvColor = vec3(vUv, 1.0);
+    vec3 mixedColor = mix(blackColor, uvColor, strength);
+
+    gl_FragColor = vec4(mixedColor, 1.0);
 
 
-    gl_FragColor = vec4(vec3(strength), 1.0);
+    // gl_FragColor = vec4(vec3(strength), 1.0);
 }
